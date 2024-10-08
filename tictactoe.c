@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-# this is comment added on the web
+//comment
 void clear(char (*arr)[3]){
 	char n='1';
 	for(int i=0;i<3; i++){
