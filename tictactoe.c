@@ -168,7 +168,43 @@ int input(char (*arr)[3]){
 
 
 
+int logic(char (*arr)[3]){
+	
+	//Horizontal Logic
 
+	for(int i=0; i<3;i++){
+
+			if( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2]){
+				printf("Congrats You Won!\n");
+				return 1;
+			}
+	}
+	
+	//Vertical Logic
+
+	for(int j=0 ; j<3 ;j++){
+
+		if( arr[0][j] == arr[1][j] && arr[1][j] == arr[2][j]){
+			printf("Congrats You Won!\n");
+			return 1;
+		}
+	}
+
+	//Diagonal Logic
+
+	if( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2]){
+		printf("Congrats You Won!\n");
+		return 1;
+	}else if(arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0]){
+		printf("Congrats You Won!\n");
+		return 1;
+	}else{
+
+	}
+
+
+	return 0;
+}
 
 int main(){
 	int count = 0;
@@ -182,6 +218,8 @@ int main(){
 		}
 
 		printf("\n%d\n",count);
+
+		if(logic(tic)) break;
 
 	}
 
