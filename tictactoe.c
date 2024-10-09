@@ -1,6 +1,18 @@
 #include <stdio.h>
 
-//comment
+// Author : Girish Kumar
+// Date of Project Start : 8/10/2024
+
+void empty_stdin(void){
+
+	int c = getchar();
+
+	while( c != '\n' && c != EOF){
+		c = getchar();
+	}
+
+}
+// clears the tictactoe board with spot numbering
 void clear(char (*arr)[3]){
 	char n='1';
 	for(int i=0;i<3; i++){
@@ -14,6 +26,7 @@ void clear(char (*arr)[3]){
 	
 }
 
+// Prints the tictactoe graphic
 void print(char (*arr)[3]){
 	int count=0;
 	for(int i=0; i<3; i++){
@@ -26,6 +39,8 @@ void print(char (*arr)[3]){
 
 }
 
+
+//Checks if the input move is valid 
 int validMove(char (*arr)[3],int location){
 	int local;
 	if (location<=3){
@@ -52,18 +67,42 @@ int validMove(char (*arr)[3],int location){
 			return 1;
 		}
 
-	}else{
-		printf("\nInvalid Location\n");
-	}
+	}else{}
+
 
 }
 
+//Enters the move in the Tic Tac Toe Board
 int input(char (*arr)[3]){
 	int location;char validchar;
 	print(arr);
 	printf("Enter Location :");
-	scanf("%d",&location);
+	int rtn ; //variable to save scanf return
+	rtn = scanf("%d",&location);
 
+	for(;;){
+		
+		if(rtn == EOF) {
+			fputs("(User cancelled input.)\n",stderr);
+			return 1;
+		}else if(rtn == 0){
+			fputs("(Invalid user input.)\n",stderr);
+			empty_stdin();
+			break;
+		}else if( location<1 || location >9){
+			fputs("(Invalid location range is [1-9].)\n",stderr);
+			empty_stdin();
+			break;
+		}else{
+			empty_stdin();
+			break;
+		}
+
+
+	}
+	if(rtn == 0 || location <1 || location > 9 || rtn == EOF){
+		return 0;
+	}
 	if (location<=3){
 		int local = location -1;
 		if(validMove(arr,location)){
@@ -119,7 +158,6 @@ int input(char (*arr)[3]){
 			return 0;
 		}
 	}else{
-		printf("\nInvalid Location\n");
 		return 0;
 	}
 
