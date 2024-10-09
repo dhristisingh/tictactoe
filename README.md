@@ -1,4 +1,4 @@
-## Tic Tac Toe
+# Tic Tac Toe
 
 Creating a tic tac toe game in c language as a challenge
 
