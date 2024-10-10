@@ -34,7 +34,7 @@ void print(char (*arr)[3]){
 		printf(" %c | %c | %c",arr[i][0],arr[i][1],arr[i][2]);
 		count++;
 		printf("\n");
-		(count <3)? printf("--- --- ---\n") :printf("\n");
+		(count <3)? printf("--- --- ---\n") :printf("\n\n");
 	}
 
 }
@@ -73,7 +73,7 @@ int validMove(char (*arr)[3],int location){
 }
 
 //Enters the move in the Tic Tac Toe Board
-int input(char (*arr)[3]){
+int input(char (*arr)[3],char move){
 	int location;char validchar;
 	print(arr);
 	printf("Enter Location :");
@@ -107,8 +107,7 @@ int input(char (*arr)[3]){
 		int local = location -1;
 		if(validMove(arr,location)){
 			
-			printf("\nEnter Input :");
-			scanf(" %c",&validchar);
+			validchar = move;
 			if(validchar == 'X' || validchar == 'x' || validchar == 'O' || validchar == 'o'){
 				arr[0][local] = validchar;
 
@@ -124,8 +123,8 @@ int input(char (*arr)[3]){
 	}else if(location<=6){
 		int local = location -4;
 		if(validMove(arr,location)){
-			printf("\nEnter Input :");
-			scanf(" %c",&validchar);
+			validchar = move;
+			
 			if(validchar == 'X' || validchar == 'x' || validchar == 'O' || validchar == 'o'){
 				arr[1][local] = validchar;
 
@@ -142,8 +141,7 @@ int input(char (*arr)[3]){
 		int local = location - 7;
 		if(validMove(arr,location)){
 
-			printf("\nEnter Input :");
-			scanf(" %c",&validchar);
+			validchar = move;
 			if(validchar == 'X' || validchar == 'x' || validchar == 'O' || validchar == 'o'){
 				arr[2][local] = validchar;
 
@@ -168,14 +166,14 @@ int input(char (*arr)[3]){
 
 
 
-int logic(char (*arr)[3]){
+int logic(char (*arr)[3],char player){
 	
 	//Horizontal Logic
 
 	for(int i=0; i<3;i++){
 
 			if( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2]){
-				printf("Congrats You Won!\n");
+				printf("Congrats %c Won!\n\n",player);
 				return 1;
 			}
 	}
@@ -185,7 +183,7 @@ int logic(char (*arr)[3]){
 	for(int j=0 ; j<3 ;j++){
 
 		if( arr[0][j] == arr[1][j] && arr[1][j] == arr[2][j]){
-			printf("Congrats You Won!\n");
+			printf("Congrats %c Won!\n\n",player);
 			return 1;
 		}
 	}
@@ -193,10 +191,10 @@ int logic(char (*arr)[3]){
 	//Diagonal Logic
 
 	if( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2]){
-		printf("Congrats You Won!\n");
+		printf("Congrats %c Won!\n\n",player);
 		return 1;
 	}else if(arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0]){
-		printf("Congrats You Won!\n");
+		printf("Congrats %c Won!\n\n",player);
 		return 1;
 	}else{
 
@@ -206,23 +204,101 @@ int logic(char (*arr)[3]){
 	return 0;
 }
 
+
+char startNewGame(char (*arr)[3] , char *player0){
+
+	clear(arr);
+	printf("Enter Player 0 Sign : [ X or O]");
+	scanf(" %c",player0);
+
+	return *player0;
+	
+
+}
+
+
 int main(){
 	int count = 0;
+	char player0,player1,ch = 'Y';
 	char tic[3][3];
 	clear(tic);
-	while(count < 9){
+	int check,flag = 1;
 
-		
-		if(input(tic)){
-			count++;
+	while(flag == 1){
+		if (ch == 'Y'){
+			startNewGame(tic,&player0);
+		}else if (ch == 'N'){
+			flag = 0;
+			break;
+		}else{
+			printf("Wrong choice! Try again");
+			continue;
+		}
+		if(check == EOF){
+			printf("Invalid character. \n");
+			empty_stdin();
+			continue;
+		}else if( player0 == 'X' || player0 == 'O'){
+			empty_stdin();
+			break;
+		}else{
+			printf("Invalid character. \n");
+			empty_stdin();
+			continue;
 		}
 
-		printf("\n%d\n",count);
-
-		if(logic(tic)) break;
-
+	}
+	
+	printf("Player 0 picked sign : %c\n",player0);
+	if(player0 == 'X'){
+		player1 = 'O';
+		printf("Player 1 picked sign : %c\n",player1);
+	}else{
+		player1 = 'X';
+		printf("Player 1 picked sign : %c\n",player1);
 	}
 
+	while(count < 9){
+
+		if(count & 1){ 
+			printf("\nThis Player 0 [%c]  Chance \n\n",player0);
+			if(input(tic,player0)){
+				count++;
+			}
+		}else{
+			printf("\nThis Player 1 [%c] Chance \n\n",player1);
+			if(input(tic,player1)){
+				count++;
+			}
+		}
+
+		if(count &1){
+			if(logic(tic,player1)){
+				printf("Do you want to play again? { Y/N }");
+				scanf(" %c",&ch);
+				break;
+			}
+		}else{
+			if(logic(tic,player0)){
+				printf("Do you want to play again? { Y/N }");
+				scanf(" %c",&ch);
+				break;
+			}
+		}	
+
+	
+		
+
+		if(count == 9){
+			print(tic);
+			printf("\n\n\t\t*****Game Tied******\n\n\n");
+			printf("Do you want to play again? { Y/N }");
+			scanf(" %c",&ch);
+			
+		}
+
+
+	}
 	print(tic);
 	
 
