@@ -205,17 +205,35 @@ int logic(char (*arr)[3],char player){
 }
 
 
+char startNewGame(char (*arr)[3] , char *player0){
+
+	clear(arr);
+	printf("Enter Player 0 Sign : [ X or O]");
+	scanf(" %c",player0);
+
+	return *player0;
+	
+
+}
+
 
 int main(){
 	int count = 0;
-	char player0,player1;
+	char player0,player1,ch = 'Y';
 	char tic[3][3];
 	clear(tic);
-	int check;
-	
-	while(1){
-		printf("Enter Your sign : [X or O]");
-		check = scanf(" %c",&player0);
+	int check,flag = 1;
+
+	while(flag == 1){
+		if (ch == 'Y'){
+			startNewGame(tic,&player0);
+		}else if (ch == 'N'){
+			flag = 0;
+			break;
+		}else{
+			printf("Wrong choice! Try again");
+			continue;
+		}
 		if(check == EOF){
 			printf("Invalid character. \n");
 			empty_stdin();
@@ -255,9 +273,17 @@ int main(){
 		}
 
 		if(count &1){
-			if(logic(tic,player1)) break;
+			if(logic(tic,player1)){
+				printf("Do you want to play again? { Y/N }");
+				scanf(" %c",&ch);
+				break;
+			}
 		}else{
-			if(logic(tic,player0)) break;
+			if(logic(tic,player0)){
+				printf("Do you want to play again? { Y/N }");
+				scanf(" %c",&ch);
+				break;
+			}
 		}	
 
 	
@@ -265,11 +291,12 @@ int main(){
 
 		if(count == 9){
 			print(tic);
-			printf("\n\n\t\t*****Game tied starting new game.******\n\n\n");
-			clear(tic);
-			count = 0;
-			print(tic);
+			printf("\n\n\t\t*****Game Tied******\n\n\n");
+			printf("Do you want to play again? { Y/N }");
+			scanf(" %c",&ch);
+			
 		}
+
 
 	}
 	print(tic);
