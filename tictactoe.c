@@ -120,7 +120,7 @@ int input(char (*arr)[3],char move){
 		}else{
 			printf("\nAlready Occupied\n");
 			return 0;
-		}
+		} 
 	}else if(location<=6){
 		int local = location -4;
 		if(validMove(arr,location)){
@@ -263,7 +263,8 @@ int main(){
 		//	flag = 0;
 			break;
 		}else{
-			printf("Wrong choice! Try again");
+			printf("Wrong choice! Try again\n\n");
+			check = startNewGame(tic,&player0);
 		}
 	
 	
@@ -320,8 +321,6 @@ int main(){
 				break;
 				
 			}
-
-
 		}
 		print(tic);
 	}
