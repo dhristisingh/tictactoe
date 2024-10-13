@@ -204,12 +204,40 @@ int logic(char (*arr)[3],char player){
 	return 0;
 }
 
+int inputCheck(char** userinput){
+//	printf("***%c***", **userinput);
+	if(**userinput == 'X'|| **userinput == 'Y') return 0;
 
+	if (**userinput == EOF){
+		printf("EOF error.");
+		return 0;
+	}
+	else if( (**userinput != 'X') || (**userinput != 'O')){
+		printf("Invalid Input : It must be X or Y\n");
+		return 1;
+	}else{
+		printf("successful.");
+		return 0;
+	}
+
+	return 0;
+
+}
 char startNewGame(char (*arr)[3] , char *player0){
-
+	int checker = 0;
 	clear(arr);
 	printf("Enter Player 0 Sign : [ X or O]");
+	
 	scanf(" %c",player0);
+	empty_stdin();
+	while ( inputCheck(&player0) )
+	{
+		printf("Enter Player 0 Sign : [ X or O]");
+		scanf(" %c",player0);
+		empty_stdin();
+
+	} 
+
 
 	return *player0;
 	
@@ -225,81 +253,77 @@ int main(){
 	int check,flag = 1;
 
 	while(flag == 1){
+		//printf("*******%c*******",ch);
 		if (ch == 'Y'){
-			startNewGame(tic,&player0);
+
+			count = 0;
+			check = startNewGame(tic,&player0);
 		}else if (ch == 'N'){
-			flag = 0;
+		//	flag = 0;
 			break;
 		}else{
 			printf("Wrong choice! Try again");
-			continue;
 		}
-		if(check == EOF){
-			printf("Invalid character. \n");
-			empty_stdin();
-			continue;
-		}else if( player0 == 'X' || player0 == 'O'){
-			empty_stdin();
-			break;
-		}else{
-			printf("Invalid character. \n");
-			empty_stdin();
-			continue;
-		}
-
-	}
 	
-	printf("Player 0 picked sign : %c\n",player0);
-	if(player0 == 'X'){
-		player1 = 'O';
-		printf("Player 1 picked sign : %c\n",player1);
-	}else{
-		player1 = 'X';
-		printf("Player 1 picked sign : %c\n",player1);
-	}
-
-	while(count < 9){
-
-		if(count & 1){ 
-			printf("\nThis Player 0 [%c]  Chance \n\n",player0);
-			if(input(tic,player0)){
-				count++;
-			}
-		}else{
-			printf("\nThis Player 1 [%c] Chance \n\n",player1);
-			if(input(tic,player1)){
-				count++;
-			}
-		}
-
-		if(count &1){
-			if(logic(tic,player1)){
-				printf("Do you want to play again? { Y/N }");
-				scanf(" %c",&ch);
-				break;
-			}
-		}else{
-			if(logic(tic,player0)){
-				printf("Do you want to play again? { Y/N }");
-				scanf(" %c",&ch);
-				break;
-			}
-		}	
-
 	
+		printf("Player 0 picked sign : %c\n",player0);
+
+
+		if(player0 == 'X'){
+			player1 = 'O';
+			printf("Player 1 picked sign : %c\n",player1);
+		}else{
+			player1 = 'X';
+			printf("Player 1 picked sign : %c\n",player1);
 		
-
-		if(count == 9){
-			print(tic);
-			printf("\n\n\t\t*****Game Tied******\n\n\n");
-			printf("Do you want to play again? { Y/N }");
-			scanf(" %c",&ch);
-			
 		}
 
 
+
+		while(count < 9){
+
+			if(count & 1){ 
+				printf("\nThis Player 0 [%c]  Chance \n\n",player0);
+				if(input(tic,player0)){
+					count++;
+				}
+			}else{
+				printf("\nThis Player 1 [%c] Chance \n\n",player1);
+				if(input(tic,player1)){
+					count++;
+				}
+			}
+
+			if(count &1){
+				if(logic(tic,player1)){
+					printf("Do you want to play again? { Y/N }");
+					scanf(" %c",&ch);
+					break;
+				}
+			}else{
+				if(logic(tic,player0)){
+					printf("Do you want to play again? { Y/N }");
+					scanf(" %c",&ch);
+					break;
+				}
+			}	
+
+		
+			
+
+			if(count == 9){
+				print(tic);
+				printf("\n\n\t\t*****Game Tied******\n\n\n");
+				printf("Do you want to play again? { Y/N }");
+				scanf(" %c",&ch);
+				break;
+				
+			}
+
+
+		}
+		print(tic);
 	}
-	print(tic);
 	
 
 	return 0;
