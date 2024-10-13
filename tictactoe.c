@@ -42,6 +42,7 @@ void print(char (*arr)[3]){
 
 //Checks if the input move is valid 
 int validMove(char (*arr)[3],int location){
+
 	int local;
 	if (location<=3){
 		local = location -1;
@@ -206,14 +207,14 @@ int logic(char (*arr)[3],char player){
 
 int inputCheck(char** userinput){
 //	printf("***%c***", **userinput);
-	if(**userinput == 'X'|| **userinput == 'Y') return 0;
+	if(**userinput == 'X'|| **userinput == 'O') return 0;
 
 	if (**userinput == EOF){
 		printf("EOF error.");
 		return 0;
 	}
 	else if( (**userinput != 'X') || (**userinput != 'O')){
-		printf("Invalid Input : It must be X or Y\n");
+		printf("Invalid Input : It must be X or O\n"); // This part is needed to be evaluated I have doubts.
 		return 1;
 	}else{
 		printf("successful.");
@@ -253,7 +254,7 @@ int main(){
 	int check,flag = 1;
 
 	while(flag == 1){
-		//printf("*******%c*******",ch);
+	//	printf("*******%c*******",ch);
 		if (ch == 'Y'){
 
 			count = 0;
